@@ -7,43 +7,21 @@
     v-for="n in recvieApi.ct"
     :key="n"
   >
-    {{n}}
+    {{n}}111
   </div>
 
-  <q-carousel
-    v-model="jxfwslide"
-    transition-prev="jump-right"
-    transition-next="jump-left"
-    swipeable
-    arrows
-    control-color="primary"
-    animated
-    height="100%"
+  <q-card
+    v-for="(i,index) in recvieApi.chwl"
+    :key="index"
   >
-    <q-carousel-slide
-      v-for="(n,index) in recvieApi.jxfw.data"
-      :key="index"
-      :name=index
-      class="column no-wrap "
+    {{i.label}}
+    <q-item
+      v-for="(ii,index1) in i.list"
+      :key="index1"
     >
-      <div
-        class="col-3"
-        v-for="nn in n "
-        :key="nn"
-        style="text-align:center"
-      >
-        <q-btn
-          round
-          :color=nn.color
-          :icon=nn.icon
-          type="a"
-          :href=nn.href
-        />
-        <div><span>{{nn.label}}</span></div>
-      </div>
-    </q-carousel-slide>
-
-  </q-carousel>
+      {{ii}}
+    </q-item>
+  </q-card>
 </template>
 
 <script>
@@ -93,9 +71,10 @@ export default {
     function loadData2() {
       api.get('http://127.0.0.1:8000/sJxfwApi/')
         .then((response) => {
-          recvieApi.jxfw.data = response['data']['jxfwList']
-          recvieApi.jxfw.flag = false
-          console.log('jxfwok')
+          recvieApi.chwl = response['data']['chwlList']
+          console.log(response['data']['chwlList'])
+          console.log(recvieApi.chwl)
+
         })
         .catch(error => {
           console.log(error)

@@ -32,6 +32,5 @@ class card(models.Model):
     sName = models.CharField(max_length=30,null=False)
     sPrice = models.CharField(max_length=30,null=False)
     sDesc = models.CharField(max_length=512,null=False)
-    cName = models.CharField(max_length=30,null=False)
     class Meta:
         db_table='o_card'
