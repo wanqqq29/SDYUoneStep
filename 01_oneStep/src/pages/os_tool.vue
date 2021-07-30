@@ -23,186 +23,165 @@
           height="100%"
         >
           <q-carousel-slide
-            name="page1"
+            v-for="(n,index) in recvieApi.jxfw.data"
+            :key="index"
+            :name=index
             class="column no-wrap "
           >
-            <div
+          <div
               class="row"
               v-if="!recvieApi.jxfw.flag"
             >
-              <div
-                class="col-3"
-                v-for="n in recvieApi.jxfw.data.page1"
-                :key="n"
-                style="text-align:center"
-              >
-                <q-btn
-                  round
-                  :color=n.color
-                  :icon=n.icon
-                  type="a"
-                  :href=n.href
-                />
-                <div><span>{{n.label}}</span></div>
-              </div>
+            <div
+              class="col-3"
+              v-for="nn in n "
+              :key="nn"
+              style="text-align:center"
+            >
+              <q-btn
+                round
+                :color=nn.color
+                :icon=nn.icon
+                type="a"
+                :href=nn.href
+              />
+              <div><span>{{nn.label}}</span></div>
             </div>
-          </q-carousel-slide>
-          <q-carousel-slide
-            name="page2"
-            class="column no-wrap"
-          >
-            <div class="row">
-              <div
-                class="col-3"
-                v-for="nn in recvieApi.jxfw.data.page2"
-                :key="nn"
-                style="text-align:center"
-              >
-                <q-btn
-                  round
-                  :color=nn.color
-                  :icon=nn.icon
-                  type="a"
-                  :href=nn.href
-                />
-                <div><span>{{nn.label}}</span></div>
-              </div>
-            </div>
+          </div>
           </q-carousel-slide>
         </q-carousel>
+        <q-separator color='primary' />
       </q-card-section>
-      <q-separator color='primary' />
-
-      <!-- 生活服务 -->
-      <q-card-section>
-        <q-chip
-          color="teal"
-          text-color="white"
-          icon="bookmark"
-          size="sm"
-        >
-          生活服务
-        </q-chip>
-        <div class="row">
-          <div
-            class="col-3"
-            v-for="n in recvieApi.shfw.data"
-            :key="n"
-            style="text-align:center"
+        <!-- 生活服务 -->
+        <q-card-section>
+          <q-chip
+            color="teal"
+            text-color="white"
+            icon="bookmark"
+            size="sm"
           >
-            <q-btn
-              round
-              :color=n.color
-              :icon=n.icon
-              type="a"
-              :href=n.href
-            />
-            <div><span>{{n.label}}</span></div>
+            生活服务
+          </q-chip>
+          <div class="row">
+            <div
+              class="col-3"
+              v-for="n in recvieApi.shfw.data"
+              :key="n"
+              style="text-align:center"
+            >
+              <q-btn
+                round
+                :color=n.color
+                :icon=n.icon
+                type="a"
+                :href=n.href
+              />
+              <div><span>{{n.label}}</span></div>
+            </div>
           </div>
-        </div>
-      </q-card-section>
-      <q-separator color="teal" />
-      <!-- 吃喝玩乐 -->
-      <q-card-section>
-        <q-chip
-          color="purple"
-          text-color="white"
-          icon="bookmark"
-          size="sm"
-        >
-          吃喝玩乐
-        </q-chip>
-        <q-expansion-item
-          class="shadow-1 overflow-hidden q-ma-sm"
-          style="border-radius: 25px"
-          expand-separator
-          icon="explore"
-          label="餐厅"
-          header-class="bg-purple text-white"
-          expand-icon-class="text-white"
-        >
-          <q-card>
-            <div class="row r-ma">
-              <div
-                class="col-3"
-                v-for="(n,i) in recvieApi.chwl.ct"
-                :key="n"
-                style="text-align:center"
-              >
-                <q-btn
-                  round
-                  :color=n.color
-                  :icon=n.icon
-                  :to={name:n.href,params:{loc:i}}
-                />
-                <div><span>{{n.label}}</span></div>
+        </q-card-section>
+        <q-separator color="teal" />
+        <!-- 吃喝玩乐 -->
+        <q-card-section>
+          <q-chip
+            color="purple"
+            text-color="white"
+            icon="bookmark"
+            size="sm"
+          >
+            吃喝玩乐
+          </q-chip>
+          <q-expansion-item
+            class="shadow-1 overflow-hidden q-ma-sm"
+            style="border-radius: 25px"
+            expand-separator
+            icon="explore"
+            label="餐厅"
+            header-class="bg-purple text-white"
+            expand-icon-class="text-white"
+          >
+            <q-card>
+              <div class="row r-ma">
+                <div
+                  class="col-3"
+                  v-for="(n,i) in recvieApi.chwl.ct"
+                  :key="n"
+                  style="text-align:center"
+                >
+                  <q-btn
+                    round
+                    :color=n.color
+                    :icon=n.icon
+                    :to={name:n.href,params:{loc:i}}
+                  />
+                  <div><span>{{n.label}}</span></div>
+                </div>
               </div>
-            </div>
-          </q-card>
-        </q-expansion-item>
-        <q-separator color="purple" />
+            </q-card>
+          </q-expansion-item>
+          <q-separator color="purple" />
 
-        <q-expansion-item
-          class="shadow-1 overflow-hidden q-ma-sm"
-          style="border-radius: 25px"
-          expand-separator
-          icon="explore"
-          label="饮品店"
-          header-class="bg-purple text-white"
-          expand-icon-class="text-white"
-        >
-          <q-card>
-            <div class="row r-ma">
-              <div
-                class="col-3"
-                v-for="n in recvieApi.chwl.yp"
-                :key="n"
-                style="text-align:center"
-              >
-                <q-btn
-                  round
-                  :color=n.color
-                  :icon=n.icon
-                  type="a"
-                  :href=n.href
-                />
-                <div><span>{{n.label}}</span></div>
+          <q-expansion-item
+            class="shadow-1 overflow-hidden q-ma-sm"
+            style="border-radius: 25px"
+            expand-separator
+            icon="explore"
+            label="饮品店"
+            header-class="bg-purple text-white"
+            expand-icon-class="text-white"
+          >
+            <q-card>
+              <div class="row r-ma">
+                <div
+                  class="col-3"
+                  v-for="n in recvieApi.chwl.yp"
+                  :key="n"
+                  style="text-align:center"
+                >
+                  <q-btn
+                    round
+                    :color=n.color
+                    :icon=n.icon
+                    type="a"
+                    :href=n.href
+                  />
+                  <div><span>{{n.label}}</span></div>
+                </div>
               </div>
-            </div>
-          </q-card>
-        </q-expansion-item>
-        <q-separator color="purple" />
+            </q-card>
+          </q-expansion-item>
+          <q-separator color="purple" />
 
-        <q-expansion-item
-          class="shadow-1 overflow-hidden q-ma-sm"
-          style="border-radius: 25px"
-          expand-separator
-          icon="explore"
-          label="北苑广场"
-          header-class="bg-purple text-white"
-          expand-icon-class="text-white"
-        >
-          <q-card>
-            <div class="row r-ma">
-              <div
-                class="col-3"
-                v-for="n in recvieApi.chwl.gc"
-                :key="n"
-                style="text-align:center"
-              >
-                <q-btn
-                  round
-                  :color=n.color
-                  :icon=n.icon
-                  type="a"
-                  :href=n.href
-                />
-                <div><span>{{n.label}}</span></div>
+          <q-expansion-item
+            class="shadow-1 overflow-hidden q-ma-sm"
+            style="border-radius: 25px"
+            expand-separator
+            icon="explore"
+            label="北苑广场"
+            header-class="bg-purple text-white"
+            expand-icon-class="text-white"
+          >
+            <q-card>
+              <div class="row r-ma">
+                <div
+                  class="col-3"
+                  v-for="n in recvieApi.chwl.gc"
+                  :key="n"
+                  style="text-align:center"
+                >
+                  <q-btn
+                    round
+                    :color=n.color
+                    :icon=n.icon
+                    type="a"
+                    :href=n.href
+                  />
+                  <div><span>{{n.label}}</span></div>
+                </div>
               </div>
-            </div>
-          </q-card>
-        </q-expansion-item>
-      </q-card-section>
+            </q-card>
+          </q-expansion-item>
+        </q-card-section>
     </q-card>
   </div>
 </template>
@@ -211,7 +190,7 @@
 import { api } from 'boot/axios';
 import { ref, reactive, onMounted } from 'vue';
 export default {
-  setup () {
+  setup() {
     const recvieApi = reactive({
       jxfw: {
         data: '',
@@ -229,11 +208,11 @@ export default {
       }
     })
 
-    function loadData () {
+    function loadData() {
       // 教学服务
-      api.get('/jxfw')
+      api.get('http://127.0.0.1:8000/sJxfwApi/')
         .then((response) => {
-          recvieApi.jxfw.data = response['data']['list']
+          recvieApi.jxfw.data = response['data']['jxfwList']
           recvieApi.jxfw.flag = false
           console.log('jxfwok')
         })

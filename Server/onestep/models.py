@@ -9,7 +9,7 @@ class Service(models.Model):
     color = models.CharField(max_length=30,null=False)
     label = models.CharField(max_length=30,null=False)
     icon = models.CharField(max_length=30,null=False)
-    href = models.CharField(max_length=30,null=False)
+    href = models.CharField(max_length=512,null=False)
     type = models.IntegerField(null=False)
     createTime = models.DateTimeField(auto_now_add=True)
     modifyTime = models.DateTimeField(auto_now=True)
