@@ -26,6 +26,10 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path:'/sdyuOS',
+    component:() =>import('pages/submit/submit.vue')
+  },
 
   // Always leave this as last one,
   // but you can also remove it

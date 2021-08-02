@@ -13,10 +13,10 @@
             class="text-teal"
           >
             <q-tab
-              v-for="i in tabpanel"
-              :name=i.name
-              :key="i"
-              :label=i.label
+              v-for="(i,index) in tabpanel.data"
+            :name=i.loc
+            :key="index"
+            :label=i.label
             />
           </q-tabs>
         </q-page-sticky>
@@ -31,9 +31,9 @@
           transition-next="jump-up"
         >
           <q-tab-panel
-            v-for="i in tabpanel"
-            :name=i.name
-            :key="i"
+            v-for="(i,index) in tabpanel.data"
+            :name=i.loc
+            :key="index"
             :label=i.label
           >
             <q-card>
@@ -45,17 +45,17 @@
               <q-list>
                 <q-item
                   clickable
-                  v-for="i in card"
-                  :key="i"
+                  v-for="ii in card[i.label]"
+                  :key="ii"
                 >
                   <q-item-section>
-                    <q-img :src=i.imgsrc />
+                    <q-img :src=ii.imgSrc />
                   </q-item-section>
 
                   <q-item-section>
-                    <q-item-label hreader>{{i.item_name}}</q-item-label>
-                    <q-item-label overline>￥{{i.item_prince}}</q-item-label>
-                    <q-item-label caption>{{i.item_desc}}</q-item-label>
+                    <q-item-label hreader>{{ii.sName}}</q-item-label>
+                    <q-item-label overline>￥{{ii.sPrice}}</q-item-label>
+                    <q-item-label caption>{{ii.sDesc}}</q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -75,29 +75,47 @@ import { api } from 'boot/axios';
 
 export default {
   setup () {
-    const tabpanel = ref([{
-      name: '1',
-      label: '暂无信息'
-    }])
+    const tabpanel = reactive({
+      data:''
+    })
     const card = ref([{
-      imgsrc: "https://cdn.quasar.dev/img/parallax2.jpg",
-      item_name: "商品名称",
-      item_prince: "0",
-      item_desc: "商品描述"
+      imgSrc: "https://cdn.quasar.dev/img/parallax2.jpg",
+      sName: "商品名称",
+      sPrince: "0",
+      sDesc: "商品描述"
     }])
     const route = useRoute()
+    const tab = ref('0')
 
+    // function load (a) {
+    //   api.get('/ct_list?loc=' + a)
+    //     .then((response) => {
+    //       if (response['data']['tab'].flag != '0') {
+    //         tabpanel.value = response['data']['tab']
+    //         card.value = response['data']['card']
+    //       } else {
+    //         console.log('null')
+    //       }
 
-    function load (a) {
-      api.get('/ct_list?loc=' + a)
+    //     })
+    //     .catch(error => {
+    //       console.log(error)
+    //     })
+    // }
+ function load (a) {
+      api.get('http://127.0.0.1:8000/tabpanelApi/?pos=' + a)
         .then((response) => {
-          if (response['data']['tab'].flag != '0') {
-            tabpanel.value = response['data']['tab']
-            card.value = response['data']['card']
-          } else {
-            console.log('null')
-          }
+          tabpanel.data = response['data']['tab']
+          tab.value = response['data']['tab'][0]['loc']
+          console.log(response['data']['tab'])
+        })
+        .catch(error => {
+          console.log(error)
+        })
 
+        api.get('http://127.0.0.1:8000/cardApi/')
+        .then((response) => {
+          card.value = response['data']
         })
         .catch(error => {
           console.log(error)
@@ -106,7 +124,9 @@ export default {
 
 
     onMounted(() => {
-      load(route.params.loc)
+      load(route.params.pos)
+      console.log(route.params.pos,'pos')
+      console.log(route.params.loc,'loc')
     })
 
     return {
@@ -114,7 +134,7 @@ export default {
       tabpanel,
       card,
       load,
-      tab: ref('1'),
+      tab,
     }
   }
 }

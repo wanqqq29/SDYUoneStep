@@ -6,12 +6,12 @@ from onestep.models import Service, tabpanel, card
 # Create your views here.
 
 def get_index_page(request):
-    return render(request, template_name='index.html')
+    return render(request, template_name='serviceSubmit.html')
 
 
-def submit(request):
+def serviceSubmit(request):
     if request.method == 'GET':
-        return render(request, template_name='index.html')
+        return render(request, template_name='serviceSubmit.html')
     elif request.method == 'POST':
         sc = Service()
         sc.color = request.POST.get('inColor')
@@ -21,6 +21,23 @@ def submit(request):
         sc.type = request.POST.get('inType')
         sc.save()
     return HttpResponse('ok!')
+
+def tabpanelSubmit(request):
+    if request.method == 'GET':
+        return render(request,template_name='tabpanelSubmit.html')
+    elif request.method == 'POST':
+        tp = tabpanel()
+        tp.label = request.POST.get('inLabel')
+        tp.pos = request.POST.get('inpos')
+        tp.loc = request.POST.get('inloc')
+        tp.save()
+    return HttpResponse('ok!')
+
+def submitApi(request):
+    if request.method == 'GET':
+        return HttpResponse('Connect ok')
+    elif request.method == 'POST':
+        return HttpResponse(request.POST.get('label')+request.POST.get('pos'))
 
 def sJxfwApi(request):
     if request.method == 'GET':
@@ -53,4 +70,30 @@ def sJxfwApi(request):
 def tabpanelApi(request):
     if request.method == 'GET':
         pos = request.GET.get('pos')
-        loc = request.GET.get('loc')
+        # loc = request.GET.get('loc')
+        a = tabpanel.objects.values().filter(pos=pos)
+        tab = []
+        for i in range(0,len(a)):
+            tab.append(a[i])
+        r={"tab":tab}
+        return JsonResponse(r)
+
+def cardApi(request):
+    if request.method == 'GET':
+        c = card.objects.values('cName').distinct()
+        a = card.objects.values().all()
+        tabList = []
+        cardList=[]
+        for i in range(0,len(c)):
+            tabList.append(c[i]['cName'])
+        for ii in range(0,len(a)):
+            cardList.append(a[ii])
+        r = {}
+        # 将不同位置的商铺分组
+        for iii in cardList:
+            for iiii in tabList:
+                if iii['cName'] == iiii: #判断商铺名称是否与数据库中遍历出的商铺名称相同
+                    cardListlist = []
+                    cardListlist.append(iii)
+                r[iiii]=cardListlist
+        return  JsonResponse(r)

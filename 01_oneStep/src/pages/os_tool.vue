@@ -108,16 +108,18 @@
               <div class="row r-ma">
                 <div
                   class="col-3"
-                  v-for="(n,i) in i.list"
-                  :key="i"
+                  v-for="(n,index) in i.list"
+                  :key="index"
                   style="text-align:center"
                 >
                   <q-btn
                     round
                     :color=n.color
                     :icon=n.icon
-                    :to={name:n.href,params:{loc:i,pos:n.label}}
+                    :to={name:n.href,params:{loc:index,pos:n.label}}
                   />
+                    <!-- loc店铺位置，pos餐厅位置；pos南一，loc南一窗口1 -->
+
                   <div><span>{{n.label}}
                     </span></div>
                 </div>
@@ -165,9 +167,7 @@ export default {
           console.log('shfwok')
           recvieApi.shfw.flag = false
           recvieApi.chwl = response['data']['chwlList']
-          console.log(recvieApi.chwl)
           console.log('chwlok')
-
         })
         .catch(error => {
           console.log(error)

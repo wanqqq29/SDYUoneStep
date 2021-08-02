@@ -1,27 +1,12 @@
 <template>
-  <div>
-    <h1>test</h1>
-    {{weather.temp}}摄氏度，{{weather.text}}
-  </div>
-  <div
-    v-for="n in recvieApi.ct"
-    :key="n"
-  >
-    {{n}}111
-  </div>
+  <h1>Test</h1>
 
-  <q-card
-    v-for="(i,index) in recvieApi.chwl"
-    :key="index"
-  >
-    {{i.label}}
-    <q-item
-      v-for="(ii,index1) in i.list"
-      :key="index1"
-    >
-      {{ii}}
+  <q-list>
+    <q-item v-for="i in list.tab" :key="i">
+      {{i}}
     </q-item>
-  </q-card>
+  </q-list>
+
 </template>
 
 <script>
@@ -80,14 +65,33 @@ export default {
           console.log(error)
         })
     }
+
+
+    const list = reactive({
+      tab:''
+    })
+    function loadData3(pos) {
+      api.get('http://127.0.0.1:8000/tabpanelApi/?pos=' + pos)
+        .then((response) => {
+          list.tab = response['data']['tab']
+          console.log(response)
+          console.log(list)
+
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+
+
+
     onMounted(() => {
-      setTimeout((loadData()), 1000)
-      loadData2()
+      // setTimeout((loadData()), 1000)
+      loadData3('南苑一楼')
     })
 
     return {
-      loadData, weather, loadData2, recvieApi, aaa,
-      jxfwslide: ref('page1'),
+      loadData, weather, loadData2,loadData3, recvieApi, aaa, list
     }
   }
 }
