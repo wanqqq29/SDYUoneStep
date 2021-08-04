@@ -50,8 +50,9 @@
             </div>
           </q-carousel-slide>
         </q-carousel>
-        <q-separator color='primary' />
       </q-card-section>
+        <q-separator color='primary' />
+
       <!-- 生活服务 -->
       <q-card-section>
         <q-chip
@@ -126,8 +127,6 @@
               </div>
             </q-card>
           </q-expansion-item>
-          <q-separator color="purple" />
-
         </div>
 
       </q-card-section>
@@ -158,7 +157,7 @@ export default {
 
     function loadData() {
       // 教学服务
-      api.get('http://127.0.0.1:8000/sJxfwApi/')
+      api.get('/sJxfwApi/')
         .then((response) => {
           recvieApi.jxfw.data = response['data']['jxfwList']
           recvieApi.jxfw.flag = false

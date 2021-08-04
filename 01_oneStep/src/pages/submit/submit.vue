@@ -37,7 +37,7 @@
           <q-tab-panel name="service">
             <div class="text-h6">服务页</div>
             <q-form
-              action="http://127.0.0.1:8000/submitApi/?pos=service"
+              action="http://123.56.127.98:8000/submitApi/?pos=service"
               method="post"
               @submit="onSubmit"
               @reset="onReset"

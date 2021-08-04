@@ -14,20 +14,10 @@
         arrows
       >
         <q-carousel-slide
-          :name="1"
-          img-src="../assets/img/banner/1.jpg"
-        />
-        <q-carousel-slide
-          :name="2"
-          img-src="../assets/img/banner/2.jpg"
-        />
-        <q-carousel-slide
-          :name="3"
-          img-src="../assets/img/banner/1.jpg"
-        />
-        <q-carousel-slide
-          :name="4"
-          img-src="../assets/img/banner/2.jpg"
+          v-for="(i,index) in banner.data"
+          :key='index'
+          :name=index
+          :img-src=i.bSrc
         />
       </q-carousel>
     </q-responsive>
@@ -58,20 +48,20 @@
     <q-timeline color="secondary">
       <q-timeline-entry
         heading
-        body="Timeline heading"
+        body="校园新闻"
       />
-      <q-timeline-entry
-        title="Event Title"
-        subtitle="February 22, 1986"
-        :body="body"
-        to="/test"
-      />
+      <div
+        v-for="(i,index) in news.data"
+        :key="index"
+      >
+        <q-timeline-entry
+          :title=i.title
+          :subtitle=i.subtitle
+          :body=i.body
+        />
 
-      <q-timeline-entry
-        title="Event Title"
-        subtitle="February 21, 1986"
-        :body="body"
-      />
+      </div>
+
     </q-timeline>
   </div>
 </template>
@@ -83,7 +73,7 @@ import { api } from 'boot/axios';
 import { useQuasar, date } from 'quasar';
 import { ref, reactive, onMounted } from 'vue';
 export default {
-  setup () {
+  setup() {
     const $q = useQuasar()
     const weather = reactive({
       temp: '',
@@ -91,7 +81,13 @@ export default {
       data: '',
       time: ''
     })
-    function loadData () {
+    const banner = reactive({
+      data: '',
+    })
+    const news = reactive({
+      data: ''
+    })
+    function loadData() {
       api.get('https://devapi.qweather.com/v7/weather/now?location=101120101&key=0ff640e9311c4b92b733e2d8c12765c6')
         .then((response) => {
           weather.temp = response['data']['now']['temp']
@@ -104,6 +100,26 @@ export default {
       let timeStamp = Date.now()
       let formattedString = date.formatDate(timeStamp, 'YYYY-MM-DD 星期d HH:mm')
       weather.time = formattedString
+
+
+      api.get('/bannerApi/')
+        .then((response) => {
+          banner.data = response['data']['banner']
+          // banner.bSrc = response['data']['bSrc']
+          console.log(banner.data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      api.get('/newsApi/')
+        .then((response) => {
+          console.log(response['data'])
+          news.data = response['data']['news']
+          console.log(news.data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
     onMounted(() => {
       loadData()
@@ -112,9 +128,10 @@ export default {
     return {
       loadData,
       weather,
-      slide: ref(1),
+      slide: ref(0),
       autoplay: true,
-      body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, '
+      banner,
+      news,
     }
   }
 }

@@ -14,7 +14,7 @@
           >
             <q-tab
               v-for="(i,index) in tabpanel.data"
-            :name=i.loc
+            :name=i.ckID
             :key="index"
             :label=i.label
             />
@@ -32,12 +32,12 @@
         >
           <q-tab-panel
             v-for="(i,index) in tabpanel.data"
-            :name=i.loc
+            :name=i.ckID
             :key="index"
             :label=i.label
           >
             <q-card>
-              <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
+              <q-img :src=i.mSrc>
                 <div class="text-h5 absolute-bottom text-right">
                   {{i.label}}
                 </div>
@@ -45,7 +45,7 @@
               <q-list>
                 <q-item
                   clickable
-                  v-for="ii in card[i.label]"
+                  v-for="ii in card[i.ckID]"
                   :key="ii"
                 >
                   <q-item-section>
@@ -86,7 +86,7 @@ export default {
     }])
     const route = useRoute()
     const tab = ref('0')
-
+    const pwd = ''
     // function load (a) {
     //   api.get('/ct_list?loc=' + a)
     //     .then((response) => {
@@ -103,19 +103,21 @@ export default {
     //     })
     // }
  function load (a) {
-      api.get('http://127.0.0.1:8000/tabpanelApi/?pos=' + a)
+      api.get('/tabpanelApi/?pos=' + a)
         .then((response) => {
-          tabpanel.data = response['data']['tab']
-          tab.value = response['data']['tab'][0]['loc']
           console.log(response['data']['tab'])
+          tabpanel.data = response['data']['tab']
+          tab.value = response['data']['tab'][0]['ckID']
+          
         })
         .catch(error => {
           console.log(error)
         })
 
-        api.get('http://127.0.0.1:8000/cardApi/')
+        api.get('/cardApi/')
         .then((response) => {
           card.value = response['data']
+          console.log(response['data'])
         })
         .catch(error => {
           console.log(error)
@@ -135,6 +137,7 @@ export default {
       card,
       load,
       tab,
+      pwd
     }
   }
 }
