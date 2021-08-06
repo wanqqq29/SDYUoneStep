@@ -1,6 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from onestep.models import Service, tabpanel, card
+from onestep.models import Service, tabpanel, card,banner,NewsLine
 
 
 # Create your views here.
@@ -36,6 +36,7 @@ def tabpanelSubmit(request):
 def submitApi(request):
     if request.method == 'GET':
         return HttpResponse('Connect ok')
+
     elif request.method == 'POST':
         return HttpResponse(request.POST.get('label')+request.POST.get('pos'))
 
@@ -80,20 +81,38 @@ def tabpanelApi(request):
 
 def cardApi(request):
     if request.method == 'GET':
-        c = card.objects.values('cName').distinct()
+        c = card.objects.values('cName_id').distinct()
         a = card.objects.values().all()
         tabList = []
         cardList=[]
         for i in range(0,len(c)):
-            tabList.append(c[i]['cName'])
+            tabList.append(c[i]['cName_id'])
         for ii in range(0,len(a)):
             cardList.append(a[ii])
         r = {}
         # 将不同位置的商铺分组
         for iii in cardList:
             for iiii in tabList:
-                if iii['cName'] == iiii: #判断商铺名称是否与数据库中遍历出的商铺名称相同
+                if iii['cName_id'] == iiii: #判断商铺名称是否与数据库中遍历出的商铺名称相同
                     cardListlist = []
                     cardListlist.append(iii)
                 r[iiii]=cardListlist
         return  JsonResponse(r)
+
+def bannerApi(request):
+    if request.method == 'GET':
+        a =banner.objects.values()
+        img = []
+        for i in range(0,len(a)):
+            img.append(a[i])
+        r={"banner":img}
+        return JsonResponse(r)
+
+def NewsApi(request):
+    if request.method == 'GET':
+        a=NewsLine.objects.values()
+        news = []
+        for i in range(0, len(a)):
+            news.append(a[i])
+        r = {"news": news}
+        return JsonResponse(r)
