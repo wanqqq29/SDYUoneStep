@@ -1,7 +1,8 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from onestep.models import Service, tabpanel, card,banner,NewsLine
-
+import requests,re
+from lxml import etree
 
 # Create your views here.
 
@@ -116,3 +117,32 @@ def NewsApi(request):
             news.append(a[i])
         r = {"news": news}
         return JsonResponse(r)
+
+def newS():
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "zh-CN",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Referer": "http://www.sdyu.edu.cn/index.htm",
+    }
+    url='http://www.sdyu.edu.cn/xwzx/tzgg.htm'
+    html = requests.get(url=url,headers=headers).text.encode('latin-1').decode('utf-8')
+    html_tree = etree.HTML(html)
+    title = html_tree.xpath("/html/body/div[@class='wp-wrapper']/div[@class='wp-inner']/ul[@class='subnews-list']/a[@id='line_u6_0']/li/text()")
+    time = html_tree.xpath("/html/body/div[@class='wp-wrapper']/div[@class='wp-inner']/ul[@class='subnews-list']/a[@id='line_u6_0']/li/span/text()")
+    href = html_tree.xpath("/html/body/div[@class='wp-wrapper']/div[@class='wp-inner']/ul[@class='subnews-list']/a[@id='line_u6_0']/@href")
+    title = re.sub("\r\n",'',title)
+    title = re.sub(" ",'',title)
+    href = re.sub("^..", '', href)
+    href = 'http://www.sdyu.edu.cn' + href
+    if len(title) != 0:
+        nl = NewsLine()
+        nl.title = title
+        nl.href  = href
+        nl.subtitle = time
+        nl.body = title
+        nl.save
+
+
+#https://blog.csdn.net/u014368609/article/details/72524476

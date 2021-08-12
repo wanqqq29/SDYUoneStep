@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title></title>
+  <style type="text/css">
+
+  </style>
+    <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.js"></script>
+    <script src="https://www.jq22.com/demo/jqueryflexslider201705191144/js/jquery.flexslider-min.js"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=6yAoynmTPNlTBa8z1X4LfwGE"></script>
+  <script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script>
+
+</head>
+
+<body>
+  <p id="demo">点击这个按钮，获得您的坐标：</p>
+  <button onclick="getLocation1()">试一aaa下</button>
+
+  <script>
+
+    function getLocation1() {
+      var geolocation = new BMap.Geolocation();
+      geolocation.getCurrentPosition(function (r) {
+        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+          var mk = new BMap.Marker(r.point);
+          currentLat = r.point.lat;
+          currentLon = r.point.lng;
+          curLat = currentLat; 
+          curLng = currentLon;
+          var pt = new BMap.Point(currentLon, currentLat);
+          var geoc = new BMap.Geocoder();
+          geoc.getLocation(pt, function (rs) {
+            var addComp = rs.addressComponents;
+            curLat = currentLat; 
+            curLng = currentLon;
+            var city = addComp.city;
+            var addComp = rs.addressComponents;
+            var texts = addComp.district + "-" + addComp.street + "-" + addComp.streetNumber;
+            //获取地理位置成功，跳转
+            alert(texts);
+          })
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>

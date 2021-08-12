@@ -33,29 +33,29 @@
                 align="justify"
                 narrow-indicator
               >
-                <q-route-tab
+                <!-- <q-route-tab
                   class="text-purple col"
                   name="index"
                   label="首页"
                   to="/"
-                />
+                /> -->
                 <q-route-tab
                   class="text-orange col"
                   name="tool"
                   label="服务"
                   to="/tool"
                 />
-                <q-route-tab
+                <!-- <q-route-tab
                   class="text-teal col"
                   name="details"
                   label="吃喝玩乐详情页"
                   to="/list"
-                />
+                /> -->
                 <q-route-tab
                   class="text-teal col"
-                  name="movies"
-                  label="Movies"
-                  to="/test"
+                  name="test"
+                  label="test"
+                  to="/guidmap"
                 />
 
               </q-tabs>
@@ -76,7 +76,7 @@ import { ref } from 'vue'
 export default {
   setup () {
     return {
-      tab: ref('index')
+      tab: ref('tool')
     }
   }
 }

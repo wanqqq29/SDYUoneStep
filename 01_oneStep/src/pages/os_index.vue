@@ -54,12 +54,13 @@
         v-for="(i,index) in news.data"
         :key="index"
       >
+      <a class='timeline' :href=i.href>
         <q-timeline-entry
           :title=i.title
           :subtitle=i.subtitle
           :body=i.body
         />
-
+      </a>
       </div>
 
     </q-timeline>
@@ -106,14 +107,12 @@ export default {
         .then((response) => {
           banner.data = response['data']['banner']
           // banner.bSrc = response['data']['bSrc']
-          console.log(banner.data)
         })
         .catch(error => {
           console.log(error)
         })
       api.get('/newsApi/')
         .then((response) => {
-          console.log(response['data'])
           news.data = response['data']['news']
           console.log(news.data)
         })
@@ -138,3 +137,9 @@ export default {
 
 
 </script>
+<style>
+.timeline{
+  color:black;
+  text-decoration: none;
+}
+</style>

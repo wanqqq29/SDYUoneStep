@@ -1,5 +1,8 @@
 <template>
   <div class="q-pa-sm">
+    <q-banner class="bg-grey-3">
+      系统正在维护,某些功能不可用
+    </q-banner>
     <q-card class="my-card">
 
       <!-- 教学服务 -->
@@ -183,10 +186,6 @@ export default {
       jxfwslide: ref('page1'),
     }
   }
-
-
-
-
 }
 </script>
 

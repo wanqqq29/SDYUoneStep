@@ -49,8 +49,9 @@ class banner(models.Model):
 
 #新闻表
 class NewsLine(models.Model):
-    title = models.CharField(max_length=255,null=False)
+    title = models.CharField(max_length=255,null=False,primary_key=True)
     subtitle = models.CharField(max_length=255,null=False)
     body = models.CharField(max_length=888,null=False)
+    href = models.CharField(max_length=888,null=True)
     class Meta:
         db_table:'NewsLine'
