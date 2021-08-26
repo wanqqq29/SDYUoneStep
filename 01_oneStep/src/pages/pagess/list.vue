@@ -100,27 +100,14 @@ export default {
     const route = useRoute()
     const tab = ref('0')
     const pwd = ''
-    // function load (a) {
-    //   api.get('/ct_list?loc=' + a)
-    //     .then((response) => {
-    //       if (response['data']['tab'].flag != '0') {
-    //         tabpanel.value = response['data']['tab']
-    //         card.value = response['data']['card']
-    //       } else {
-    //         console.log('null')
-    //       }
 
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     })
-    // }
     function load(a) {
       api.get('/tabpanelApi/?pos=' + a)
         .then((response) => {
           console.log(response['data']['tab'])
           tabpanel.data = response['data']['tab']
           tab.value = response['data']['tab'][0]['ckID']
+          console.log(response['data'], 'tab')
 
         })
         .catch(error => {
@@ -130,13 +117,11 @@ export default {
       api.get('/cardApi/')
         .then((response) => {
           card.value = response['data']
-          console.log(response['data'])
         })
         .catch(error => {
           console.log(error)
         })
     }
-
 
     onMounted(() => {
       load(route.params.pos)

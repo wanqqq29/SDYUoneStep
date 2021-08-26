@@ -54,4 +54,5 @@ class NewsLine(models.Model):
     body = models.CharField(max_length=888,null=False)
     href = models.CharField(max_length=888,null=True)
     class Meta:
+        get_latest_by ='subtitle'
         db_table:'NewsLine'

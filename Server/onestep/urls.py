@@ -9,5 +9,6 @@ urlpatterns = [
     path('cardApi/',onestep.views.cardApi),
     path('bannerApi/',onestep.views.bannerApi),
     path('newsApi/',onestep.views.NewsApi),
+    path('news/', onestep.views.newS),
 
 ]

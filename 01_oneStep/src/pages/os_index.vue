@@ -99,7 +99,7 @@ export default {
           weather.data = 'NetWorkError'
         })
       let timeStamp = Date.now()
-      let formattedString = date.formatDate(timeStamp, 'YYYY-MM-DD 星期d HH:mm')
+      let formattedString = date.formatDate(timeStamp, 'YYYY-MM-DD ddd HH:mm')
       weather.time = formattedString
 
 

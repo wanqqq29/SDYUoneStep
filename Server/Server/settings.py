@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'onestep.apps.OnestepConfig',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +82,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'oneStep',
-        'HOST':'123.56.127.98',
+        'HOST':'127.0.0.1',
         'PORT':'3306',
         'USER':'oneStep',
         'PASSWORD':'Onestep111'
@@ -135,3 +136,7 @@ CORS_ORIGIN_WHITELIST =(
     'https://123.56.127.98',
     'http://localhost:8080'
 )
+
+CRONJOBS =[
+    ('30 9,12,15,18 * * *', 'onestep.views.py.newS()', '>>task.log'),
+]

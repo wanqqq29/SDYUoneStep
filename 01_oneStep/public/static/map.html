@@ -13,6 +13,17 @@
             overflow: hidden;
             margin: 0;
             font-family: "微软雅黑";
+
+        }
+
+        #l-map {
+            height: 400px;
+            width: 100%;
+        }
+
+        #r-result,
+        #r-result table {
+            width: 100%;
         }
     </style>
     <script type="text/javascript"
@@ -25,6 +36,7 @@
 
 <body>
     <div id="allmap"></div>
+    <div id="r-result"></div>
 </body>
 
 </html>
@@ -72,15 +84,29 @@
         address += e.addressComponent.district;
         address += e.addressComponent.street;
         address += e.addressComponent.streetNumber;
-        console.log(map.getZoom() + 2)
         alert(map.getZoom())
         map.setzoom(map.getZoom() + 2)
 
     });
-
     locationControl.addEventListener("locationError", function (e) {
         alert(e.message);
     });
 
+
+    // 标记点
+    var express5 = new BMapGL.Marker(new BMapGL.Point(117.247983, 36.680123));
+    map.addOverlay(express5);
+    // 创建信息窗口
+    var opts = {
+        width: 150,
+        height: 60,
+        title: '5号楼妈妈驿站'
+    };
+    var infoWindow = new BMapGL.InfoWindow('地址：五号宿舍楼下', opts);
+    // 点标记添加点击事件
+    var point = new BMapGL.Point(117.247983, 36.680123);
+    express5.addEventListener('click', function () {
+        map.openInfoWindow(infoWindow, point); // 开启信息窗口
+    });
 
 </script>

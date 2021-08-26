@@ -5,16 +5,12 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      // { 
-      //   path: '/',
-      //   component: () => import('pages/os_index.vue'),
-      // },
       { 
-        path:'tool',
-        component:()=> import('pages/os_tool.vue'), 
+        path: '/',
+        component: () => import('pages/os_index.vue'),
       },
       { 
-        path:'/',
+        path:'tool',
         component:()=> import('pages/os_tool.vue'), 
       },
       {
@@ -30,9 +26,16 @@ const routes: RouteRecordRaw[] = [
         path: 'guidmap',
         component: () => import('pages/pagess/guidmap.vue')
       },
+      { 
+        path: 'login',
+        component: () => import('pages/y_login.vue'),
+      }
     ],
   },
-
+  { 
+    path: '/roll',
+    component: () => import('pages/box/roll.vue')
+  },
 
   // Always leave this as last one,
   // but you can also remove it

@@ -33,12 +33,12 @@
                 align="justify"
                 narrow-indicator
               >
-                <!-- <q-route-tab
+                <q-route-tab
                   class="text-purple col"
                   name="index"
                   label="首页"
                   to="/"
-                /> -->
+                /> 
                 <q-route-tab
                   class="text-orange col"
                   name="tool"
@@ -53,11 +53,16 @@
                 /> -->
                 <q-route-tab
                   class="text-teal col"
-                  name="test"
-                  label="test"
+                  name="map"
+                  label="校园地图"
                   to="/guidmap"
                 />
-
+                <q-route-tab
+                  class="text-blue col"
+                  name="login"
+                  label="登录"
+                  to="/login"
+                />
               </q-tabs>
             </div>
 
